@@ -53,7 +53,7 @@ import {
 export default function KidsTubeApp() {
   const { account, loaded, error, signOut } = useAccount();
   if (!loaded || !account.signedIn || !account.family) {
-    return <FamilyWelcome loading={!loaded} unavailable={error || (loaded && !account.googleConfigured)} />;
+    return <FamilyWelcome loading={!loaded} unavailable={error} configured={account.googleConfigured} />;
   }
   return <FamilyPlayer key={account.family.id} account={account} signOut={signOut} />;
 }

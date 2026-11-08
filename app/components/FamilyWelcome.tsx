@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import GoogleSignInButton, { GoogleSignInLink } from "./GoogleSignInButton";
 
-export default function FamilyWelcome({ loading, unavailable }: { loading: boolean; unavailable: boolean }) {
+export default function FamilyWelcome({ loading, unavailable, configured = true }: { loading: boolean; unavailable: boolean; configured?: boolean }) {
   const params = useSearchParams();
   const login = params.get("login");
   const notice = login === "not_invited"
@@ -33,7 +33,7 @@ export default function FamilyWelcome({ loading, unavailable }: { loading: boole
           <span className="family-welcome-star star-one" aria-hidden="true">✦</span>
           <span className="family-welcome-star star-two" aria-hidden="true">✧</span>
           <span className="family-welcome-star star-three" aria-hidden="true">✦</span>
-          <img className="family-welcome-heroes" src="/images/welcome/little-explorers.svg" width="1000" height="667" alt="Two smiling little explorers playing with a toy car, colorful blocks and a little tree" fetchPriority="high" />
+          <img className="family-welcome-heroes" src="/images/welcome/little-explorers.svg" width="1000" height="667" alt="A friendly tree symbol" fetchPriority="high" />
           <span className="family-welcome-sticker sticker-play"><span aria-hidden="true">🚙</span> Let’s play!</span>
           <span className="family-welcome-sticker sticker-grow"><span aria-hidden="true">🌟</span> Little wins, big smiles</span>
         </div>
@@ -57,6 +57,7 @@ export default function FamilyWelcome({ loading, unavailable }: { loading: boole
         </nav>
         {loading ? <p className="family-welcome-status" role="status">Checking your sign-in…</p>
           : unavailable ? <div className="family-welcome-status" role="alert"><p>We couldn't connect to sign-in. Please try again.</p><button className="family-welcome-retry" onClick={() => window.location.reload()}>Try again</button></div>
+          : !configured ? <p className="family-welcome-status">Family accounts are not configured on this installation. You can play the practice games above.</p>
           : <div className="family-welcome-actions">
             <GoogleSignInButton testId="create-family" label="Create your family" />
             <p>Continue with Google. No new password.</p>

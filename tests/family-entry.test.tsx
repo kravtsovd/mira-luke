@@ -27,6 +27,14 @@ it("waits for identity before offering entry or reading profiles", () => {
   expect(screen.queryByTestId("create-family")).toBeNull();
   expect(profiles).not.toHaveBeenCalled();
 });
+it("offers local games when this installation has no Google configuration", () => {
+  state.account.googleConfigured = false;
+  render(<KidsTubeApp />);
+  expect(screen.getByText(/Family accounts are not configured/)).toBeTruthy();
+  expect(screen.getByRole("link", { name: "Counting and addition" }).getAttribute("href")).toBe("/games/mira-addition");
+  expect(screen.queryByTestId("create-family")).toBeNull();
+  expect(profiles).not.toHaveBeenCalled();
+});
 it("shows a retry when the session check fails instead of opening a cached family", () => {
   state.error = true;
   render(<KidsTubeApp />);

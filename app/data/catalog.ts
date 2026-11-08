@@ -254,7 +254,7 @@ const CORE_VIDEOS: CartoonVideo[] = [
     "topicId": "vehicles",
     "durationLabel": "58:02",
     "searchTerms": ["блиппи", "экскаватор", "стройка", "техника"],
-    "profiles": ["luke"]
+    "profiles": []
   },
   {
     "id": "AwQjZA-zKU0",
