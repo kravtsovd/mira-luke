@@ -1,0 +1,44 @@
+.car-people-overlay { position: fixed; inset: 0; z-index: 1100; overflow: auto; overscroll-behavior: contain; display: grid; place-items: center; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); background: radial-gradient(circle at 50% 12%, #dbf6ff 0, #c5ebf4 40%, #eaf7ee 100%); color: #244054; }
+.car-people-overlay, .car-people-overlay * { box-sizing: border-box; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+.car-people-stage { width: min(100%, 870px); margin: auto; padding: clamp(14px, 3vw, 26px); background: #fffdf7; border: 4px solid #fff; border-radius: 32px; box-shadow: 0 16px 0 #6cabbd33, 0 22px 48px #24405422; }
+.car-people-toolbar { display: flex; justify-content: space-between; align-items: center; min-height: 42px; }
+.car-people-progress { display: flex; gap: 9px; }
+.car-people-progress span { width: 19px; height: 19px; background: #d4e4e9; border-radius: 50%; border: 2px solid #a6c1ca; }
+.car-people-progress span[data-done="true"] { background: #64c88d; border-color: #319d62; }
+.car-people-progress span[data-current="true"] { border-color: #227fa0; box-shadow: 0 0 0 4px #b9eaf7; }
+.car-people-close, .car-people-repeat { display: grid; place-items: center; border: 0; border-radius: 50%; background: #e6f3f7; color: #244054; width: 46px; height: 46px; cursor: pointer; }
+.car-people-close svg, .car-people-repeat svg { width: 24px; height: 24px; }
+.car-people-repeat:disabled { opacity: .5; cursor: default; }
+.car-people-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.car-people-heading h2 { font-size: clamp(26px, 5vw, 39px); line-height: 1.08; margin: 5px 0 0; font-weight: 900; }
+.car-people-heading h2:focus { outline: none; }
+.car-people-instruction { margin: 7px 0 15px; font-size: clamp(15px, 2.3vw, 19px); font-weight: 780; color: #507084; }
+.car-people-target { width: 100%; display: flex; flex-direction: column; align-items: center; border: 4px dashed #73bfd6; border-radius: 27px; background: linear-gradient(#d5f2fa, #effbff 70%, #d8eec5 70%); min-height: clamp(195px, 31dvh, 280px); padding: 10px 10px 0; cursor: pointer; touch-action: manipulation; }
+.car-people-person-row { width: 100%; flex: 1; display: flex; justify-content: center; align-items: end; gap: clamp(5px, 2vw, 18px); min-height: 0; }
+.car-people-person { display: block; width: min(26%, 170px); height: clamp(125px, 22dvh, 215px); background-image: url('/images/luke-cars/people-trio.svg'); background-repeat: no-repeat; background-size: 300% auto; background-position-y: bottom; flex: 0 0 auto; }
+.car-people-person[data-person="0"] { background-position-x: left; }
+.car-people-person[data-person="1"] { background-position-x: center; }
+.car-people-person[data-person="2"] { background-position-x: right; }
+.car-people-overlay[data-round="1"] .car-people-person { width: min(50%, 190px); }
+.car-people-overlay[data-round="2"] .car-people-person { width: min(38%, 165px); }
+.car-people-target-bottom { display: grid; place-items: center; min-height: 55px; width: 100%; background: #e1f0cb; border-top: 4px solid #78bb70; border-radius: 0 0 20px 20px; }
+.car-people-parking { color: #36715d; font-size: 15px; font-weight: 850; }
+.car-people-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.car-people-overlay[data-round="1"] .car-people-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.car-people-option { min-height: clamp(102px, 17dvh, 146px); background: #fff; border: 3px solid #c6e2ea; border-bottom: 8px solid #a9d4df; border-radius: 22px; cursor: grab; padding: 5px; touch-action: none; transition: transform .15s, border-color .15s, background .15s; }
+.car-people-option:hover { transform: translateY(-3px); border-color: #4badd0; }
+.car-people-option[data-hint="true"] { border-color: #29a55c; background: #e6f9df; animation: car-people-glow 1.2s infinite alternate; }
+.car-people-option:disabled { cursor: default; opacity: .7; }
+.car-people-cars { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; gap: 0; }
+.car-people-cars img { display: block; object-fit: contain; width: 33%; height: 100%; max-height: 125px; pointer-events: none; }
+.car-people-cars img:only-child { width: min(90%, 160px); }
+.car-people-cars img:first-child:nth-last-child(2), .car-people-cars img:first-child:nth-last-child(2) ~ img { width: 46%; }
+.car-people-target-bottom .car-people-cars { height: 54px; }
+.car-people-target-bottom .car-people-cars img { max-height: 53px; width: min(25%, 120px); }
+.car-people-feedback { min-height: 25px; margin: 13px 0 2px; color: #19745b; font-size: clamp(16px, 2.5vw, 20px); font-weight: 900; text-align: center; }
+.car-people-tip { margin: 0; color: #597383; font-size: 13px; text-align: center; }
+.car-people-drag { position: fixed; z-index: 1200; transform: translate(-50%, -50%) rotate(-4deg); width: clamp(130px, 25vw, 200px); height: 100px; pointer-events: none; filter: drop-shadow(0 12px 8px #2440544d); }
+.car-people-overlay button:focus-visible { outline: 4px solid #175478; outline-offset: 3px; }
+@keyframes car-people-glow { to { box-shadow: 0 0 0 5px #72da8a; } }
+@media (max-width: 580px) { .car-people-stage { border-radius: 25px; } .car-people-target { min-height: 215px; } .car-people-person { width: 30%; height: clamp(130px, 21dvh, 175px); } .car-people-options, .car-people-overlay[data-round="1"] .car-people-options { grid-template-columns: 1fr; gap: 6px; } .car-people-option { height: 70px; min-height: 70px; border-radius: 16px; padding: 1px; } .car-people-cars img { max-height: 64px; } .car-people-tip { font-size: 12px; } }
+@media (max-height: 550px) and (min-width: 580px) { .car-people-stage { max-width: 760px; padding: 8px 18px; } .car-people-toolbar { min-height: 30px; } .car-people-close, .car-people-repeat { width: 33px; height: 33px; } .car-people-heading h2 { font-size: 26px; } .car-people-instruction { font-size: 14px; margin: 3px 0 6px; } .car-people-target { min-height: 130px; height: 34dvh; padding-top: 2px; } .car-people-person, .car-people-overlay[data-round="1"] .car-people-person, .car-people-overlay[data-round="2"] .car-people-person { height: 75px; width: 75px; } .car-people-target-bottom { min-height: 39px; } .car-people-options { margin-top: 7px; } .car-people-option { min-height: 65px; height: 15dvh; } .car-people-instruction { margin: 4px 0 7px; } .car-people-feedback { margin-top: 4px; font-size: 15px; } .car-people-tip { display: none; } }
