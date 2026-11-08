@@ -1,0 +1,34 @@
+import { expect, test } from "@playwright/test";
+
+test("pause shows only language-verified YouTube recommendations before the library", async ({ page }) => {
+  const catalogResponse = page.waitForResponse(response => response.url().endsWith("/api/catalog"));
+  await page.goto("/?theme=stories");
+  const home = page.getByTestId("pause-catalog");
+  const catalog = await (await catalogResponse).json();
+  await expect(home.locator(".kids-video-card")).toHaveCount(catalog.items.filter((video: { topicId: string }) => video.topicId === "stories").length);
+  await expect(home.locator("[data-recommended]")).toHaveCount(0);
+  const libraryIds = await home.locator(".kids-video-card").evaluateAll(cards => cards.map(card => card.getAttribute("data-testid")));
+  const responsePromise = page.waitForResponse(response => response.url().includes("/api/youtube-recommendations?"));
+  await home.locator(".kids-video-card").first().click();
+  const response = await responsePromise;
+  expect(response.ok()).toBe(true);
+  const batch = await response.json();
+  expect(batch.videos.length).toBeLessThanOrEqual(2);
+  expect(batch.videos.every((video: { language?: string }) => video.language === "ru" || video.language === "en")).toBe(true);
+  await expect(page.getByTestId("player-tap-pause")).toHaveAttribute("data-playing", "true");
+  await page.getByTestId("player-tap-pause").click();
+  await expect(page.getByTestId("pause-resume")).toBeVisible();
+  const cards = home.locator(".kids-video-card");
+  await expect(home.locator("[data-recommended=true]")).toHaveCount(batch.videos.length);
+  for (let i = 0; i < batch.videos.length; i++) await expect(cards.nth(i)).toHaveAttribute("data-testid", `kids-video-${batch.videos[i].id}`);
+  const pausedIds = await cards.evaluateAll(items => items.map(item => item.getAttribute("data-testid")));
+  expect(libraryIds.every(id => pausedIds.includes(id))).toBe(true);
+  await page.screenshot({ path: test.info().outputPath("pause-recommendations.png") });
+  if (!batch.videos.length) return;
+  await cards.first().click();
+  await expect(page).toHaveURL(new RegExp(`video=${batch.videos[0].id}`));
+  await expect(page.getByTestId("player-tap-pause")).toHaveAttribute("data-playing", "true");
+  const media = page.frameLocator('iframe[src*="youtube.com/embed/"]').locator("video");
+  const start = await media.evaluate((video: HTMLVideoElement) => video.currentTime);
+  await expect.poll(() => media.evaluate((video: HTMLVideoElement) => video.currentTime)).toBeGreaterThan(start + 1);
+});

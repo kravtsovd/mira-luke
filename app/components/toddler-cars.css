@@ -1,0 +1,83 @@
+.toddler-overlay { position: fixed; inset: 0; z-index: 1100; overflow: auto; overscroll-behavior: contain; display: grid; place-items: center; background: #eaf7ff; color: #243449; padding: max(16px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left)); }
+.toddler-overlay, .toddler-overlay * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+.toddler-game { width: min(100%, 920px, 100dvh); margin: auto; }
+.toddler-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.toddler-progress { display: flex; gap: 9px; }
+.toddler-progress span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #ccdfeb; }
+.toddler-progress svg { width: 19px; opacity: 0; }
+.toddler-progress [data-filled="true"] { background: #25ae7a; color: white; }
+.toddler-progress [data-filled="true"] svg { opacity: 1; }
+.toddler-close, .toddler-repeat { display: grid; place-items: center; flex-shrink: 0; border: 0; font: inherit; color: #243449; cursor: pointer; }
+.toddler-close { width: 44px; height: 44px; background: transparent; border-radius: 50%; }
+.toddler-repeat { width: 60px; height: 60px; border-radius: 50%; background: white; }
+.toddler-repeat svg { width: 29px; height: 29px; }
+.toddler-repeat:disabled { opacity: .35; }
+.toddler-heading { display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 110px; margin-bottom: 25px; }
+.toddler-heading h2 { font-size: clamp(25px, 4.5vw, 42px); line-height: 1.14; font-weight: 850; max-width: 620px; margin: 0; text-align: center; outline: none; }
+.toddler-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 4vw, 40px); }
+.toddler-choice { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-width: 0; min-height: 180px; aspect-ratio: 1.1; padding: 14px; border: 5px solid transparent; border-radius: 34px; background: white; color: #243449; cursor: pointer; font: inherit; }
+.toddler-choice svg, .toddler-choice .toddler-car-picture { width: 100%; max-height: 250px; pointer-events: none; }
+.toddler-choice > span { font-size: clamp(16px, 2.6vw, 24px); font-weight: 750; margin-top: 10px; }
+.toddler-car-picture { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 18px; pointer-events: none; }
+.toddler-choice:not(.toddler-part) { background: #fffaf0; padding: 5px 5px 14px; overflow: hidden; }
+.toddler-choice:not(.toddler-part) > span { padding: 0 5px; }
+.toddler-choice:active:not(:disabled) { transform: scale(.97); }
+/* Session thr_shrdda8h8y: the answer fires on pointerdown, so the browser must not turn a sliding toddler finger into a
+   pan or a cancelled pointer. kids.css sets `.kids-app button { touch-action: manipulation }`, hence the extra selector weight. */
+.toddler-overlay .toddler-choice, .toddler-overlay .toddler-garage { touch-action: none; }
+.toddler-choice[data-success="true"] { background: #ddf5e9; border-color: #25ae7a; }
+.toddler-overlay [data-hint="true"] { outline: 6px solid #eea737; outline-offset: 3px; }
+.toddler-overlay button:focus-visible { outline: 4px solid #243449; outline-offset: 4px; }
+.toddler-repair-scene { width: min(78%, 360px); margin: -12px auto 16px; }
+.toddler-repair-art { border-radius: 20px; background: #fffaf0; }
+.toddler-repair-scene svg { display: block; width: 100%; }
+.toddler-workbench { height: 9px; border-radius: 6px; background: #438ac9; }
+.toddler-part { aspect-ratio: 1.65; min-height: 130px; }
+.toddler-part svg { max-height: 130px; }
+.toddler-garages { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2.6vw, 28px); }
+.toddler-garages .toddler-roof { height: 58px; }
+.toddler-garage { padding: 0; border: 0; border-radius: 15px; background: transparent; cursor: pointer; min-width: 0; }
+.toddler-roof { display: block; height: 72px; background: #438ac9; clip-path: polygon(50% 0, 100% 80%, 97% 100%, 3% 100%, 0 80%); }
+.toddler-garage-body { display: block; padding: 18px 15% 0; background: #8fc6e5; border-radius: 0 0 12px 12px; margin: 0 4%; }
+.toddler-garage-inside { display: block; position: relative; aspect-ratio: 1; background: #26364c; border-radius: 18px 18px 0 0; overflow: hidden; }
+.toddler-hidden-car { position: absolute; inset: 0; display: grid; align-items: end; }
+.toddler-hidden-car .toddler-car-picture { width: 100%; border-radius: 0; }
+.toddler-hidden-car[data-entering="true"] { animation: toddler-park 1.8s ease-out both; }
+.toddler-garage-shutter { position: absolute; inset: 0; background: repeating-linear-gradient(#438ac9 0 24px, #3678b0 24px 28px); border-radius: inherit; transform: translateY(0); transition: transform .45s ease; }
+.toddler-garage[data-open="true"] .toddler-garage-shutter { transform: translateY(-102%); }
+.toddler-feedback { height: 40px; margin: 24px 0 0; text-align: center; font-size: 19px; color: #49677c; font-weight: 650; }
+.toddler-overlay[data-phase="success"] .toddler-feedback { font-size: 34px; color: #a77500; }
+@keyframes toddler-park { from { transform: translateY(65%) scale(1.2); } to { transform: translateY(0) scale(1); } }
+@media (max-width: 520px) {
+  .toddler-heading { gap: 12px; margin-bottom: 22px; }
+  .toddler-repeat { width: 52px; height: 52px; }
+  .toddler-choice { padding: 7px; border-radius: 24px; }
+  .toddler-roof, .toddler-garages .toddler-roof { height: 42px; }
+  .toddler-garage-body { padding: 12px 11% 0; }
+  .toddler-feedback { font-size: 16px; }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .toddler-overlay { padding-top: 8px; padding-bottom: 8px; }
+  .toddler-game { width: 100%; max-width: 690px; position: relative; }
+  .toddler-toolbar { margin: 0; }
+  .toddler-heading { min-height: 48px; margin: -43px 75px 14px; gap: 12px; }
+  .toddler-heading h2 { font-size: 25px; }
+  .toddler-repeat { width: 44px; height: 44px; }
+  .toddler-choices { max-width: 570px; margin: auto; }
+  .toddler-choice { min-height: 150px; aspect-ratio: 1.65; padding: 8px; }
+  .toddler-choice svg, .toddler-choice .toddler-car-picture { max-height: 130px; }
+  .toddler-choice:not(.toddler-part) { padding: 3px 3px 7px; }
+  .toddler-choice > span { font-size: 17px; margin: 0; }
+  .toddler-repair-scene { width: 190px; margin: 0 auto 5px; }
+  .toddler-part { min-height: 90px; aspect-ratio: 2.8; }
+  .toddler-part svg { max-height: 62px; }
+  .toddler-garages { max-width: 600px; }
+  .toddler-roof, .toddler-garages .toddler-roof { height: 32px; }
+  .toddler-garage-inside { aspect-ratio: 1.25; }
+  .toddler-feedback { height: 28px; margin: 8px 0 0; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toddler-hidden-car[data-entering="true"] { animation: none; }
+  .toddler-garage-shutter { transition: none; }
+  .toddler-choice:active:not(:disabled) { transform: none; }
+}

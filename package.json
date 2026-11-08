@@ -1,0 +1,41 @@
+{
+  "name": "mira-luke",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "preview:local": "MIRA_LUKE_PREVIEW=1 next dev --port 3212",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:playback": "playwright test",
+    "verify": "npm test && npm run typecheck && npm run build && npm audit --audit-level=low && npm run check:public",
+    "test:watch": "vitest",
+    "check:public": "node scripts/check-public-release.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^1.31.0",
+    "next": "^16.3.8",
+    "posthog-js": "^1.435.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "jsdom": "^29.1.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "dompurify": "^3.4.16"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

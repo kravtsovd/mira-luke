@@ -1,0 +1,34 @@
+/* Session thr_84z7x9rkr7: boards for Luke's animal, big/small and same-car tap games. The cards come from toddler-cars.css. */
+/* The sticker is square and the card is wider than tall: the picture takes what is left above the label and shrinks
+   with object-fit, so on a phone the label and the animal's feet are never cut off. */
+.toddler-animal-picture { flex: 1 1 0; min-height: 0; width: 100%; max-height: 230px; object-fit: contain; border-radius: 0; }
+/* Both cards are the same size; only the car inside shrinks, so the size is the one thing that differs. */
+.toddler-sized { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; }
+.toddler-sized .toddler-car-picture { width: 100%; }
+.toddler-sized[data-size="small"] .toddler-car-picture { width: 42%; }
+.toddler-sample { width: min(40%, 210px); margin: -10px auto 16px; padding: 6px; border-radius: 22px; background: white; outline: 5px solid #438ac9; }
+.toddler-sample .toddler-car-picture { border-radius: 16px; }
+/* The sample above the two cards must leave room for them on a landscape tablet (1024x768), so those cards are wider than tall. */
+.toddler-tap-same-car .toddler-choice { aspect-ratio: 1.5; min-height: 150px; }
+.toddler-tap-same-car .toddler-choice .toddler-car-picture { max-height: 200px; }
+@media (max-height: 540px) and (orientation: landscape) {
+  .toddler-animal-picture { max-height: 130px; }
+  .toddler-sample { width: 118px; margin: 0 auto 6px; padding: 4px; outline-width: 4px; }
+  .toddler-tap-same-car .toddler-choice { aspect-ratio: 2.3; min-height: 104px; }
+  .toddler-tap-same-car .toddler-choice .toddler-car-picture { max-height: 86px; }
+}
+
+/* Keep the complete object and the label inside the card on a phone. */
+.toddler-tap-big-small .toddler-choice, .toddler-tap-same-car .toddler-choice { height: clamp(180px, 29dvh, 280px); aspect-ratio: auto; }
+.toddler-object-picture { flex: 1 1 0; min-height: 0; max-height: 100%; object-fit: contain; }
+.toddler-choice > .toddler-sized { flex: 1 1 0; min-height: 0; height: auto; margin: 0; padding: 0 8px; }
+.toddler-sized .toddler-object-picture { height: 100%; min-height: 0; }
+.toddler-sized[data-size="small"] .toddler-object-picture { height: 42%; }
+.toddler-choice > span:last-child:not(.toddler-sized) { flex: 0 0 auto; }
+.toddler-sample { height: clamp(85px, 16dvh, 165px); }
+.toddler-sample .toddler-object-picture { height: 100%; }
+@media (max-height: 540px) and (orientation: landscape) {
+  .toddler-tap-big-small .toddler-choice { height: 170px; min-height: 130px; }
+  .toddler-tap-same-car .toddler-choice { height: 130px; min-height: 104px; }
+  .toddler-sample { height: 70px; }
+}
